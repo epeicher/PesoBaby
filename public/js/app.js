@@ -1,11 +1,17 @@
 var app = angular.module('app', ['ngMaterial']);
 
-app.controller('AppCtrl', function($scope, $http) {
+app.config(function($mdThemingProvider) {
+  $mdThemingProvider.theme('default');
+});
+
+app.controller('AppCtrl', function($scope, $http, $mdToast) {
 
 	var chart;
+	var url = '/data';
 
-	$http.get('/data').success(function(data) {
-	    initializeChart(data);
+	$http.get(url).success(function(data) {
+	    initializeChart(data);	    
+	    successToastr("Inicializado");
 	});
 
 
@@ -27,7 +33,8 @@ app.controller('AppCtrl', function($scope, $http) {
 	            x: {
 	                type: 'timeseries',
 	                tick: {
-	                    format: '%d-%m-%Y'
+	                    format: '%d %b',
+	                    rotate: 60
 	                }
 	            }
 	        }
@@ -36,16 +43,21 @@ app.controller('AppCtrl', function($scope, $http) {
 	}
 
 	$scope.save = function() {
-	    $http.post('/data', {
+	    $http.post(url, {
 	            fecha: $scope.fecha,
 	            peso: $scope.peso
 	        })
 	        .success(function(data) {
-	            console.log("sucess " + data);
+	        	successToastr("Guardado correctamente");
 	        })
 	        .error(function(data, status) {
 	            console.error(data + " status " + status);
 	        })
+	}
+
+	$scope.deleteLast = function() {
+		$http.delete(url);
+		successToastr("Ultima entrada borrada");
 	}
 
 	function getThePeso(data) {
@@ -56,5 +68,10 @@ app.controller('AppCtrl', function($scope, $http) {
 		return data.map(function(v) {return new Date(v.Fecha);});
 	}
 
+	function successToastr(msg) {
+		var obj = $mdToast.simple().content(msg);
+		obj.position("top right");
+		$mdToast.show(obj);
+	}
 
 });

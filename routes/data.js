@@ -1,6 +1,7 @@
 var fs = require('fs')
 var express = require('express');
 var parse = require('csv-parse');
+var csvwriter = require('csv-stringify');
 var router = express.Router();
 
 
@@ -22,11 +23,16 @@ router.get('/', function(req, res) {
   getTheData(res);
 });
 
+router.delete('/', function(req, res) {
+  deleteLastLine();
+  res.send('Deleted');
+});
+
 function getTheDataToWrite(data) {
 	var dt = new Date(data.fecha);
-	return dt.getFullYear().toString() + ',' 	
-		+ (dt.getMonth()+1).toString() + ','
-		+- (-1*dt.getDate()).toString() + ','
+	return dt.getUTCFullYear().toString() + ',' 	
+		+ (dt.getUTCMonth()+1).toString() + ','
+		+- (-1*dt.getUTCDate()).toString() + ','
 		+ data.peso
 		+ '\n'
 }
@@ -52,5 +58,27 @@ function getTheDataToWrite(data) {
 	        };
 	    });
 	}
+
+	function deleteLastLine() {
+	        fs.readFile(fileName, 'utf8', function(err, data) {
+	            if (err) {
+	                return console.log(err);
+	            }
+	            parse(data, function(err, output) {
+	                csvwriter(output.slice(0, output.length - 1),
+	                    function(err, csved) {
+	                        fs.writeFile(fileName,
+	                            csved,
+	                            'utf8',
+	                            function(err, data) {
+	                                if (err) throw err;
+	                            });
+	                    });
+	            });
+
+	        });
+	}
+
+
 
 module.exports = router;

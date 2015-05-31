@@ -13,9 +13,7 @@
         <h1 class="md-toolbar-tools" layout-align-gt-sm="center">Peso Baby</h1>
     </md-toolbar>
 
-<div layout="column" layout-align="center center">
-    <div id="myGraph" flex="80">
-    </div>
+<div layout="row" layout-align="center center">
     <div flex="20">
         <md-input-container>
             <label>Fecha</label>
@@ -25,11 +23,19 @@
             <label>Peso (Gramos)</label>
             <input type="number" ng-model="peso" required>
         </md-input-container>
-        <md-button class="md-primary" ng-click="save()">
-            Save
-        </md-button>
+        <div layout="column">
+            <md-button class="md-raised" ng-click="save()">
+                Save
+            </md-button>
+            <md-button class="md-warn" ng-click="deleteLast()">
+                Delete Last
+            </md-button>
+        </div>
+    </div>
+    <div id="myGraph" flex="80">
     </div>
 </div>
+
 
 
     <!-- Angular Material Dependencies -->
