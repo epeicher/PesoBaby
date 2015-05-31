@@ -15,7 +15,9 @@ if (express().get('env') === 'development') {
 router.post('/', function(req, res) {
     fs.appendFile(fileName, getTheDataToWrite(req.body), function(err) {
         if (err) throw err;
-    });
+
+        getTheData(res);
+    });    
 });
 
 
@@ -24,8 +26,7 @@ router.get('/', function(req, res) {
 });
 
 router.delete('/', function(req, res) {
-  deleteLastLine();
-  res.send('Deleted');
+  deleteLastLine(res);  
 });
 
 function getTheDataToWrite(data) {
@@ -59,7 +60,7 @@ function getTheDataToWrite(data) {
 	    });
 	}
 
-	function deleteLastLine() {
+	function deleteLastLine(res) {
 	        fs.readFile(fileName, 'utf8', function(err, data) {
 	            if (err) {
 	                return console.log(err);
@@ -73,6 +74,7 @@ function getTheDataToWrite(data) {
 	                            function(err, data) {
 	                                if (err) throw err;
 	                            });
+	                        getTheData(res);
 	                    });
 	            });
 

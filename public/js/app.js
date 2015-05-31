@@ -44,10 +44,11 @@ app.controller('AppCtrl', function($scope, $http, $mdToast) {
 
 	$scope.save = function() {
 	    $http.post(url, {
-	            fecha: $scope.fecha,
+	            fecha: getUTCFromFecha($scope.fecha),
 	            peso: $scope.peso
 	        })
 	        .success(function(data) {
+	        	initializeChart(data);
 	        	successToastr("Guardado correctamente");
 	        })
 	        .error(function(data, status) {
@@ -56,8 +57,10 @@ app.controller('AppCtrl', function($scope, $http, $mdToast) {
 	}
 
 	$scope.deleteLast = function() {
-		$http.delete(url);
-		successToastr("Ultima entrada borrada");
+		$http.delete(url).success(function(data) {
+			initializeChart(data);
+			successToastr("Ultima entrada borrada");
+		});		
 	}
 
 	function getThePeso(data) {
@@ -66,6 +69,14 @@ app.controller('AppCtrl', function($scope, $http, $mdToast) {
 
 	function getTheFecha(data) {
 		return data.map(function(v) {return new Date(v.Fecha);});
+	}
+
+	function getUTCFromFecha(dt) {
+		var newDate = new Date(Date.UTC(dt.getFullYear(),
+			dt.getMonth(),
+			dt.getDate()));
+		console.log(newDate);
+		return newDate;
 	}
 
 	function successToastr(msg) {
