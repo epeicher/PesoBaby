@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+    <link rel="stylesheet" href="/components/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+    <meta name="viewport" content="initial-scale=1" />
+    <link src="/components/c3/c3.min.css"></link>
+    <!-- <link rel="stylesheet" href="css/site.css"> -->
+</head>
+
+<body layout="column" ng-controller="AppCtrl">
+    <md-toolbar layout="row">
+        <h1 class="md-toolbar-tools" layout-align-gt-sm="center">Peso Baby</h1>
+    </md-toolbar>
+
+<div layout="column" layout-align="center center">
+    <div id="myGraph" flex="80">
+    </div>
+    <div flex="20">
+        <md-input-container>
+            <label>Fecha</label>
+            <input type="date" ng-model="fecha" required>
+        </md-input-container>
+        <md-input-container>
+            <label>Peso (Gramos)</label>
+            <input type="number" ng-model="peso" required>
+        </md-input-container>
+        <md-button class="md-primary" ng-click="save()">
+            Save
+        </md-button>
+    </div>
+</div>
+
+
+    <!-- Angular Material Dependencies -->
+    <script src="/components/angular/angular.min.js"></script>
+    <script src="/components/angular-animate/angular-animate.min.js"></script>
+    <script src="/components/angular-aria/angular-aria.min.js"></script>
+    <script src="/components/angular-material/angular-material.min.js"></script>
+    <!-- Chart library -->    
+    <script src="/components/d3/d3.min.js"></script>
+    <script src="/components/c3/c3.min.js"></script>
+    <!-- App -->
+    <script src="/app/app.js"></script>
+
+    <script src="//localhost:35729/livereload.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "pesobaby",
+  "version": "0.0.1",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "angular-material": "~0.9.6",
+    "c3": "~0.4.10"
+  }
+}
