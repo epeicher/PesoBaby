@@ -3,6 +3,7 @@ var express = require('express');
 var parse = require('csv-parse');
 var csvwriter = require('csv-stringify');
 var router = express.Router();
+var dataSvc = require('../services/data');
 
 
 /* GET home page. */
@@ -13,21 +14,40 @@ if (express().get('env') === 'development') {
 }
 
 router.post('/', function(req, res) {
-    fs.appendFile(fileName, getTheDataToWrite(req.body), function(err) {
-        if (err) throw err;
-
-        getTheData(res);
-    });    
+    dataSvc
+        .savePeso(req.body)
+        .then(savedSuccessfully(res),
+            errorOnSave(res));
 });
 
-
 router.get('/', function(req, res) {
-  getTheData(res);
+    dataSvc
+        .getPesos()
+        .then(savedSuccessfully(res),
+            errorOnSave(res));
 });
 
 router.delete('/', function(req, res) {
-  deleteLastLine(res);  
+    dataSvc
+        .deleteLastPeso()
+        .then(savedSuccessfully(res),
+            errorOnSave(res));
 });
+
+
+function savedSuccessfully(res) {
+	return function(data) {
+		res.send(data);
+	}	
+}
+
+function errorOnSave(res) {
+    return function(err) {
+        console.log(err);
+        res.status(500).send(err);
+    }
+}
+
 
 function getTheDataToWrite(data) {
 	var dt = new Date(data.fecha);

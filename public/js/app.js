@@ -16,6 +16,7 @@ app.controller('AppCtrl', function($scope, $http, $mdToast) {
 
 
 	function initializeChart(data) {
+		console.log(data);
 		chart = c3.generate({
 	        bindto: '#myGraph',
 	        data: {

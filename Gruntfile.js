@@ -26,7 +26,8 @@ module.exports = function (grunt) {
         files: [
           'bin/www',
           'server.js',
-          'routes/*.js'          
+          'routes/*.js',
+          'services/*.js'     
         ],
         tasks: ['develop', 'delayed-livereload']
       },
@@ -50,12 +51,22 @@ module.exports = function (grunt) {
           livereload: reloadPort
         }
       }
+    },
+    shell: {
+        options: {
+            async: true
+        },
+        target: {
+            command: 'E:\\Aplicaciones\\mongodb\\bin\\mongod --config E:\\Aplicaciones\\mongodb\\bin\\mongo.cfg'
+        }
     }
   });
 
   grunt.config.requires('watch.server.files');
   files = grunt.config('watch.server.files');
   files = grunt.file.expand(files);
+
+  grunt.loadNpmTasks('grunt-shell-spawn');
 
   grunt.registerTask('delayed-livereload', 'Live reload after the node server has restarted.', function () {
     var done = this.async();
@@ -73,7 +84,8 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('default', [
+    'shell',
     'develop',
-    'watch'
+    'watch'    
   ]);
 };
