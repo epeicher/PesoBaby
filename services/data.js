@@ -17,7 +17,7 @@ module.exports.savePeso = function(data) {
 				if(peso) {
 					peso.Fecha = data.fecha;
 					peso.Peso = data.peso;
-					return insPeso.save();
+					return peso.save();
 				}
 				else {
 					insPeso.Fecha = data.fecha;

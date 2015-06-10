@@ -4,7 +4,7 @@ var initialData = require('../initialData');
 
 var mongodb = 'mongodb://pepe:sombrero@kahana.mongohq.com:10079/ligasbs'; 
 if (express().get('env') === 'development') {
-    //mongodb = 'mongodb://localhost/pesobaby';    
+    mongodb = 'mongodb://localhost/pesobaby';    
 }
 
 var initialize = function() {    
