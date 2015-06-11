@@ -30,7 +30,7 @@ app.controller('AppCtrl', function($scope, $http, $mdToast) {
 	        bar: {
 	            zerobased: false,
                     width : {
-                        ratio: 0.8
+                        ratio: 0.5
                     }
 	        },
 	        axis: {
