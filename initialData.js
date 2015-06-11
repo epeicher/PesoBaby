@@ -13,7 +13,7 @@ var initialPesos = [
     buildPeso(2015, 5, 24, 3290),
     buildPeso(2015, 5, 26, 3320),
     buildPeso(2015, 5, 27, 3370),
-    buildPeso(2015, 5, 28, 3500),
+    buildPeso(2015, 5, 30, 3500),
 ];
 
 exports.pesos = initialPesos;
