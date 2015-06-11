@@ -1,6 +1,6 @@
 var buildPeso = function(y,m,d,p) {
 	return {
-		Fecha: Date.UTC(y,m,d),
+		Fecha: Date.UTC(y,m-1,d),
 		Peso: p
 	};
 }
